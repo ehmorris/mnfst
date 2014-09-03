@@ -5,5 +5,5 @@ Pgpitter::Application.routes.draw do
   resources :statuses, only: [:create]
   resources :keys, only: [:show]
   get "/about", to: "high_voltage/pages#show", id: "about"
-  get "/:hexid", to: "statuses#show", as: :hex
+  get "/:hexid(.:format)", to: "statuses#show", as: :hex
 end

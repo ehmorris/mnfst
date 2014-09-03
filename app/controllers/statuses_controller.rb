@@ -19,6 +19,7 @@ class StatusesController < ApplicationController
     respond_to do |format|
       format.html { @status = status }
       format.json { render json: status }
+      format.asc  { render text: status.signed_body }
     end
   end
 
