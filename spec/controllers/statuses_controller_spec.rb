@@ -2,6 +2,18 @@ require 'spec_helper'
 require 'sig_exception'
 
 describe StatusesController do
+  context '#index' do
+    it 'produces a concatenation of all the text signed by the keyid' do
+      status1 = create(:status)
+      key = status1.key
+      status2 = create(:status, key: key)
+
+      get :index, key_id: key.keyid, format: 'asc'
+
+      expect(response.body).to eq("#{status1.signed_body}\n#{status2.signed_body}")
+    end
+  end
+
   context '#create' do
     it 'produces a 400 on SigException' do
       status = double('status')

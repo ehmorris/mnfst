@@ -1,6 +1,11 @@
 require 'sig_exception'
 
 class StatusesController < ApplicationController
+  def index
+    key = Key.find_by_keyid(params[:key_id].sub("0x", ""))
+    render text: key.statuses.map(&:signed_body).join("\n")
+  end
+
   def create
     status = Status.new(status_params)
     if status.save
